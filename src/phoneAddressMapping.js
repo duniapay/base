@@ -1,34 +1,24 @@
-// import 'web3';
+import phoneHashing from "./phoneHashing";
 
-function getPhoneHash(phoneNumber) {
-    if (!phoneNumber || !isValidPhoneNumber(phoneNumber)) {
-        throw Error('Attempting to hash a non-e164 number: ' + phoneNumber)
+const PHONE_ADDRESS_MAP = {};
+
+function setAddressPhoneHash(address, phoneNumber) {
+    if (isPhoneHashPrivate(phoneNumber)) {
+        PHONE_ADDRESS_MAP[address] = phoneHashing.getPhoneHash(phoneNumber);
+    } else {
+        PHONE_ADDRESS_MAP[address] = phoneHashing.getPhoneHashPrivate(phoneNumber);
     }
-
-    // return web3.utils.soliditySha3({type: 'string', value: phoneNumber});
 }
 
 function getAddress(phoneNumber) {
-    const phoneHash = getPhoneHash(phoneNumber);
-    // TODO
-}
-
-function getMatchedContacts(contacts) {
-    let matchedContacts = [];
-
-    for (let contact in contacts) {
-        if (isVerifiedAccount(contact)) {
-            matchedContacts.push(contact);
-        }
+    let phoneHash;
+    if (isPhoneHashPrivate(phoneNumber)) {
+        phoneHash = phoneHashing.getPhoneHash(phoneNumber);
+    } else {
+        phoneHash = phoneHashing.getPhoneHashPrivate(phoneNumber);
     }
 }
 
-function isValidPhoneNumber(phoneNumber) {
-    const E164_REGEX = /^\+[1-9][0-9]{1,14}$/
-    return E164_REGEX.test(phoneNumber);
-}
+function isPhoneHashPrivate(phoneNumber) {
 
-function isVerifiedAccount(phoneNumber) {
-    // TODO
-    return false;
 }
