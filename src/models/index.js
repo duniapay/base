@@ -1,45 +1,19 @@
 
-let minimalContacts = {
-    1: {
-        recordID: "000002200-0000-0000-0000-000000000000",
-        displayName: "Soonap",
-        phoneNumbers: [],
-        thumbnailPath: "https://picsum.photos/id/237/200/300",
-    },
-    2: {
-        recordID: "000002200-0000-0000-0000-000000000000",
-        displayName: "Blueeee",
-        phoneNumbers: [],
-        thumbnailPath: "https://picsum.photos/id/237/200/300",
-    }
-}
-
 let contacts = {
     1: {
-        label: 'friend',
+        displayName: 'serge o',
+        label: 'personal',
         number: 'string'
     },
     2: {
+        displayName: 'Angela S',
         label: 'friend',
         number: 'string'
     }
 }
 
 
-let attestations = {
-    1: {
-        recordID: "000002200-0000-0000-0000-000000000000",
-        displayName: "Soonap",
-        phoneNumbers: [],
-        thumbnailPath: "https://picsum.photos/id/237/200/300",
-    },
-    2: {
-        recordID: "000002200-0000-0000-0000-000000000000",
-        displayName: "Blueeee",
-        phoneNumbers: [],
-        thumbnailPath: "https://picsum.photos/id/237/200/300",
-    }
-}
+
 
 let parsedPhoneNumber = {
     1: {
