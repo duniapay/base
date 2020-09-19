@@ -42,19 +42,17 @@ function isValidAddress(address) {
     return isAddress(address);
 }
 
-function getContacts(phoneNumber) {
-    
+function getContactList(phoneNumber) {
 }
 
 function getParsedPhoneNumber(phoneNumber) {
-    const formattedPhoneNumber = libphonenumber.parsePhoneNumberFromString(phoneNumber);
+    phoneNumber = parsePhoneNumberFromString(phoneNumber);
     const parsedPhoneNumber = {};
 
-    parsedPhoneNumber["e164Number"] = formattedPhoneNumber.number;
-    parsedPhoneNumber["displayNumber"] = formattedPhoneNumber.formatNational();
-    parsedPhoneNumber["displayNumberInternational"] = formattedPhoneNumber.formatInternational();
-    parsedPhoneNumber["countryCode"] = formattedPhoneNumber.country;
-    parsedPhoneNumber["regionCode"] = formattedPhoneNumber.carrierCode;
+    parsedPhoneNumber["e164Number"] = phoneNumber.format("E.164");
+    parsedPhoneNumber["displayNumberNational"] = phoneNumber.format("NATIONAL");
+    parsedPhoneNumber["displayNumberInternational"] = phoneNumber.format("INTERNATIONAL");
+    parsedPhoneNumber["countryCode"] = phoneNumber.country;
 
     return parsedPhoneNumber;
 }
