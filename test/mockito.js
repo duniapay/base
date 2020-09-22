@@ -1,4 +1,3 @@
-
 function mockMyFunction(callback) {
     callback();
 }

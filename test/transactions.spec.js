@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
 
-
 describe('Transaction request with valid Token', () => {
     it('Can credit user account', () => {
         // expect(sum(1, 2)).to.eql(3);
@@ -19,7 +18,6 @@ describe('Transaction request with valid Token', () => {
     });
 
 });
-
 
 describe('Transaction request with invalid Token', () => {
     it('Cannot credit user account', () => {
