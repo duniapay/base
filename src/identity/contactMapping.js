@@ -2,6 +2,20 @@ const isAddress = require("web3-utils").isAddress;
 const { ParsedPhoneNumber } = require('../identity/PhoneNumber');
 const { PhoneHash } = require('../identity/PhoneHash');
 const { phone_address, address_attestationStat } = require('../models/index');
+const { creatHash } = require('crypto').createHash;
+const ec = require('elliptic');
+
+const AuthenticationMethod = {
+    WALLET_KEY = 'wallet_key',
+    ENCRYPTION_KEY = 'encryption_key',
+}
+
+const OdisError = {
+    ODIS_QUOTA_ERROR = 'odisQuotaError',
+    ODIS_INPUT_ERROR = 'odisBadInputError',
+    ODIS_AUTH_ERROR = 'odisAuthError',
+    ODIS_CLIENT_ERROR = 'Unknown Client Error',
+}
 
 function setAddressPhoneHash(address, phoneNumber) {
     if (!isValidAddress(address)) {
@@ -59,6 +73,87 @@ function isValidAddress(address) {
     return isAddress(address);
 }
 
+function getServiceContext(contextName = 'mainnet') {
+    switch (contextName) {
+      case 'alfajores':
+        return ODIS_ALFAJORES_CONTEXT
+      case 'alfajoresstaging':
+        return ODIS_ALFAJORESSTAGING_CONTEXT
+      default:
+        return ODIS_MAINNET_CONTEXT
+    }
+  }
+
+/**
+ * Make a request to lookup the phone number identifier or perform matchmaking
+ * @param signer type of key to sign with
+ * @param body request body
+ * @param context contains service URL
+ * @param endpoint endpoint to hit
+ */
+function queryOdis(signer,body,context,endpoint) {
+    const bodyString = JSON.stringify(body)
+  
+    let authHeader = ''
+    if (signer.authenticationMethod === AuthenticationMethod.ENCRYPTION_KEY) {
+      const key = ec.keyFromPrivate(hexToBuffer(signer.rawKey))
+      authHeader = JSON.stringify(key.sign(bodyString).toDER())
+  
+      // Verify signature before sending
+      const dek = key.getPublic(true, 'hex')
+      const pubkey = ec.keyFromPublic(trimLeading0x(dek), 'hex')
+      const validSignature = pubkey.verify(bodyString, JSON.parse(authHeader))
+
+    } else {
+      authHeader = await signer.contractKit.web3.eth.sign(bodyString, body.account)
+    }
+  
+    const { odisUrl } = context
+  
+    const dontRetry = [
+      OdisError.ODIS_QUOTA_ERROR,
+      OdisError.ODIS_AUTH_ERROR,
+      OdisError.ODIS_INPUT_ERROR,
+      OdisError.ODIS_CLIENT_ERROR,
+    ]
+  
+    return (() => {
+        const res = await fetch(odisUrl + endpoint, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: authHeader,
+          },
+          body: bodyString,
+        })
+  
+        if (res.ok) {
+          const response = res.json()
+          return response
+        }
+
+        switch (res.status) {
+          case 403:
+            throw new Error(OdisError.ODIS_QUOTA_ERROR)
+          case 400:
+            throw new Error(OdisError.ODIS_INPUT_ERROR)
+          case 401:
+            throw new Error(OdisError.ODIS_AUTH_ERROR)
+          default:
+            if (res.status >= 400 && res.status < 500) {
+              throw new Error()
+            }
+            throw new Error()
+        }
+      },
+      3,
+      dontRetry,
+      []
+    )
+  }
+
+
 function getMatchedContacts(contactList) {
     const matches = [];
 
@@ -84,3 +179,8 @@ function isAccountVerified(attestationStat, numAttestationsRequired = 3, attesta
 
     return numAttestationsRemaining <= 0 && fractionAttestation >= attestationThreshold;
 }
+
+function getPepper(sig) {
+    return createHash('sha256').update(sig).digest('base64').slice(0, 13);
+}
+

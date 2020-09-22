@@ -30,6 +30,17 @@ let address_attestationStat = {
     }
 }
 
+let authSigners = {
+    walletKeySigner: {
+        authenticationMethod = AuthenticationMethod.WALLET_KEY,
+        // contractKit = 
+    },
+    EncryptionKeySigner: {
+        authenticationMethod = AuthenticationMethod.ENCRYPTION_KEY,
+        rawKey = '41e8e8593108eeedcbded883b8af34d2f028710355c57f4c10a056b72486aa04'
+    },
+}
+
 let recipients = {
     1: {
         displayName: 'John Doe',
