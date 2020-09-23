@@ -25,4 +25,42 @@ class PhoneHash {
     }
 }
 
+function getPhoneHash(phoneNumber, account, signer, context) {
+    if (!phoneNumber || !phoneNumber.isValid()) {
+        throw new Error('Invalid phone number: ' + phoneNumber);
+    }
+
+    const base64PhoneNumber = Buffer.from(e164Number).toString('base64')
+
+    const request = {
+        account,
+        timestamp: Date.now(),
+        authenticationMethod: signer.authenticationMethod,
+    }
+
+    const response =  await queryOdis(signer,body,context,'/getBlindedMessageSig')
+
+      const base64BlindSig = response.combinedSignature
+
+      const sig = Buffer.from(base64UnblindedSig, 'base64')
+    
+      const pepper = getPepper(sig)
+      const phoneHash = getPhoneHash(phoneNumber, pepper)
+      return { phoneNumber, phoneHash, pepper }
+}
+
+function getPepper(sig) {
+    
+    return createHash('sha256').update(sig).digest('base64').slice(0, 13);
+}
+
+function getPhoneHash(phoneNumber, pepper) {
+    const PHONE_PREFIX = 'tel://';
+    const PHONE_SALT_SEPARATOR = '__';
+
+    const value = PHONE_PREFIX + phoneNumber.toString() + PHONE_SALT_SEPARATOR + pepper;
+
+    return soliditySha3({type: 'string', value: value});
+}
+
 module.exports.PhoneHash = PhoneHash;
