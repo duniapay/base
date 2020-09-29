@@ -1,7 +1,6 @@
 import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
-import models from './models';
 import routes from './routes';
 
 
@@ -21,13 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Custom Middleware
 
-app.use((req, res, next) => {
-    req.context = {
-        models,
-        me: models.users[1],
-    };
-    next();
-});
 
 
 
