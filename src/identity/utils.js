@@ -3,7 +3,7 @@ const { parsePhoneNumberFromString } = require('libphonenumber-js');
 function isE164Number(e164Number) {
     const E164_REGEX = /^\+[1-9][0-9]{1,14}$/;
 
-    return E164_REGEX.test(parsedPhoneNumber.pbasePhoneNumber);
+    return E164_REGEX.test(e164Number);
 }
 
 function parsePhoneNumber(e164Number) {

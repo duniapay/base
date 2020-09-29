@@ -1,4 +1,5 @@
 const AuthenticationMethod = require('@celo/contractkit').OdisUtils.Query.AuthenticationMethod;
+const getContractKit = require('./account').getContractKit;
 
 class AuthenticationSigner {
     constructor(authenticationMethod) {
@@ -6,7 +7,7 @@ class AuthenticationSigner {
     }
 }
 
-class WalletKeySigner extends Signer {
+class WalletKeySigner extends AuthenticationSigner {
     constructor(contractKit) {
         super(AuthenticationMethod.WALLET_KEY);
 
@@ -14,7 +15,7 @@ class WalletKeySigner extends Signer {
     }
 }
 
-class EncryptionKeySigner extends Signer {
+class EncryptionKeySigner extends AuthenticationSigner {
     constructor(rawKey) {
         super(AuthenticationMethod.ENCRYPTION_KEY);
         
@@ -23,7 +24,9 @@ class EncryptionKeySigner extends Signer {
 }
 
 function getAuthSigner(account) {
-    // TODO
+    const walletKeySigner = new WalletKeySigner(getContractKit(account));
+
+    return walletKeySigner;
 }
 
 module.exports.getAuthSigner = getAuthSigner;
