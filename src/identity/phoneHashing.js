@@ -1,42 +1,28 @@
-import { soliditySha3 } from "web3-utils";
+const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
+const { getPhoneNumberIdentifier } = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier;
+const { getAuthSigner } = require('./authSigner');
+const { ErrorMessage } = require('./errorMessage');
+const { isE164Number } = require('./utils');
 
-const PHONE_PREFIX = "tel://";
-const PHONE_SALT_SEPARATOR = '__';
-const E164_REGEX = /^\+[1-9][0-9]{1,14}$/;
-
-function getPhoneHash(phoneNumber) {
-    if (!phoneNumber || !isValidPhoneNumber(phoneNumber)) {
-        throw new Error("Invalid phone number: " + e164Number);
+function getPhoneHashDetail(e164Number, account) {
+    if (!isE164Number(e164Number)) {
+        throw new Error('Invalid phone number: ' + e164Number);
     }
-    
-    return soliditySha3({type: 'string', value: getHashInput(phoneNumber, getPhoneHashSalt(phoneNumber))});
-}
 
-function getPhoneHashPrivate(e164Number) {
-    if (!phoneNumber || !isValidPhoneNumber(phoneNumber)) {
-        throw new Error("Invalid phone number: " + e164Number);
+    const authSigner = getAuthSigner(account);
+    const serviceContext = ODIS_MAINNET_CONTEXT;
+
+    try {
+        return getPhoneNumberIdentifier(e164Number, account, authSigner, serviceContext);
+    } catch (error) {
+        if (error.message === ErrorMessage.ODIS_INSUFFICIENT_BALANCE) {
+            throw new Error('ODIS insufficient balance');
+        } else if (error.message === ErrorMessage.SALT_QUOTA_EXCEEDED) {
+            throw new Error('Salt quota exceeded');
+        } else {
+            throw new Error('Salt fetch failure');
+        }
     }
-    
-    return soliditySha3({type: 'string', value: getHashInput(phoneNumber, getPhoneHashSaltPrivate(phoneNumber))});
 }
 
-function getPhoneHashSalt(phoneNumber) {
-    // TODO
-}
-
-function getPhoneHashSaltPrivate(phoneNumber) {
-    // TODO
-}
-
-function getHashInput(phoneNumber, salt = undefined) {
-    return PHONE_PREFIX + (salt ? phoneNumber + PHONE_SALT_SEPARATOR + salt : phoneNumber);
-}
-
-function isValidPhoneNumber(phoneNumber) {
-    return E164_REGEX.test(phoneNumber)
-}
-
-export default {
-    getPhoneHash,
-    getPhoneHashPrivate
-};
+module.exports.getPhoneHashDetail = getPhoneHashDetail;
