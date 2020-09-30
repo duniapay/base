@@ -7,7 +7,7 @@ const { ErrorMessage } = require('./errorMessage');
 function getMatchedContacts(e164Number, e164NumberToRecipients, account) {
     const e164NumberContacts = Object.keys(e164NumberToRecipients);
     const phoneHash = getPhoneHashDetail.phoneHash;
-    const authSigner = getAuthSigner(account);
+    const authSigner = getAuthSigner(account.address);
     const serviceContext = ODIS_MAINNET_CONTEXT;
 
     try {

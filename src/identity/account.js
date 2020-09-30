@@ -28,11 +28,17 @@ function getAccount() {
 
 function getContractKit(account) {
     const contractKit = newKit('https://alfajores-forno.celo-testnet.org');
-
-    contractKit.defaultAccount = account.address;
+    const contractKit = newKit('https://rc1-forno.celo-testnet.org');
+    
+    contractKit.addAccount(account.privateKey);
 
     return contractKit;
 }
 
+function isAccountUpToDate(dataEncryptionKey) {
+    // TODO
+}
+
 module.exports.getAccount = getAccount;
 module.exports.getContractKit = getContractKit;
+module.exports.isAccountUpToDate = isAccountUpToDate;

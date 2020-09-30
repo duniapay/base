@@ -1,5 +1,8 @@
 const AuthenticationMethod = require('@celo/contractkit').OdisUtils.Query.AuthenticationMethod;
-const getContractKit = require('./account').getContractKit;
+const { getContractKit } = require('./account');
+const { isAccountUpToDate } = require('./account');
+
+let dek = false;
 
 class AuthenticationSigner {
     constructor(authenticationMethod) {
@@ -24,9 +27,23 @@ class EncryptionKeySigner extends AuthenticationSigner {
 }
 
 function getAuthSigner(account) {
-    const walletKeySigner = new WalletKeySigner(getContractKit(account));
+    let authSigner;
+    const contractKit = getContractKit(account);
 
-    return walletKeySigner;
+    if (dek) {
+        const accountWrapper = contractKit.contracts.getAccounts();
+        const dataEncryptionKey = accountWrapper.getDataEncryptionKey(account);
+
+        const upToDate = isAccountUpToDate(dataEncryptionKey);
+
+        if (upToDate) {
+            authSigner = new EncryptionKeySigner(dataEncryptionKey);
+        }
+    } else {
+        authSigner = new WalletKeySigner(contractKit);
+    }
+
+    return authSigner;
 }
 
 module.exports.getAuthSigner = getAuthSigner;
