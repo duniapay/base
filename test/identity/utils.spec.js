@@ -12,7 +12,6 @@ const TEST_PHONE_NUMBER = {
     VALID_US_2: '14155550000',
     VALID_US_3: '4155550000',
     VALID_US_4: '(415) 555-0000',
-
 }
 
 describe("Phone number validity", () => {

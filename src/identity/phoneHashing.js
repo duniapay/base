@@ -4,7 +4,7 @@ const { getAuthSigner } = require('./authSigner');
 const { ErrorMessage } = require('./errorMessage');
 const { isE164Number } = require('./utils');
 
-function getPhoneHashDetail(e164Number, account) {
+async function getPhoneHashDetail(e164Number, account) {
     if (!isE164Number(e164Number)) {
         throw new Error('Invalid phone number: ' + e164Number);
     }
@@ -13,7 +13,9 @@ function getPhoneHashDetail(e164Number, account) {
     const serviceContext = ODIS_MAINNET_CONTEXT;
 
     try {
-        return getPhoneNumberIdentifier(e164Number, account.address, authSigner, serviceContext);
+        const res = await getPhoneNumberIdentifier(e164Number, account.address, authSigner, serviceContext);
+
+        return res;
     } catch (error) {
         if (error.message === ErrorMessage.ODIS_INSUFFICIENT_BALANCE) {
             throw new Error('ODIS insufficient balance');

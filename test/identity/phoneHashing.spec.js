@@ -2,8 +2,8 @@ const expect = require('chai').expect;
 const { getPhoneHashDetail } = require('../../src/identity/phoneHashing');
 
 const mockAccount = {
-    privateKey: '0x95299cf5513396d8bde6b612d8edc99d8e08701687431da846084df5d874cb25',
-    address: '0x0eccAf89Fe03Ba5F57980f5a83C92C38117B9a66'
+    privateKey: '0x99cd9f07f8891e1d0cdfd974b7282cfe7cbea20416bac67692d3173bc5335ba5',
+    address: '0xEb50b9B53394D5f3C81c2EbDa0618Aa3761C967C'
 }
 
 const mockPhoneHashDetail = {
@@ -12,12 +12,10 @@ const mockPhoneHashDetail = {
     pepper: 'piWqRHHYWtfg9',
 }
 
-// describe('Get phone hash detail', () => {
-//     it('gets the phone hash detail correctly', () => {
-//         expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).e164Number).to.equal(mockPhoneHashDetail.e164Number);
-//         expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).phoneHash).to.equal(mockPhoneHashDetail.phoneHash);
-//         expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).pepper).to.equal(mockPhoneHashDetail.pepper);
-//     });
-// });
-
-console.log(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount));
+describe('Get phone hash detail', () => {
+    it('gets the phone hash detail correctly', () => {
+        expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).e164Number).to.equal(mockPhoneHashDetail.e164Number);
+        expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).phoneHash).to.equal(mockPhoneHashDetail.phoneHash);
+        expect(getPhoneHashDetail(mockPhoneHashDetail.e164Number, mockAccount).pepper).to.equal(mockPhoneHashDetail.pepper);
+    });
+});

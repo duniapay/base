@@ -7,10 +7,6 @@ function isE164Number(e164Number) {
 }
 
 function parsePhoneNumber(e164Number) {
-    if (!isE164Number(e164Number)) {
-        throw new Error('Invalid phone number: ' + e164Number);
-    }
-
     const parsedPhoneNumber = {};
     const basePhoneNumber = parsePhoneNumberFromString(e164Number);
 

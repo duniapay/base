@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { get } = require('https');
 const path = require('path');
 const Web3 = require('web3');
 const newKit = require('@celo/contractkit').newKit;
@@ -28,8 +29,7 @@ function getAccount() {
 
 function getContractKit(account) {
     const contractKit = newKit('https://alfajores-forno.celo-testnet.org');
-    const contractKit = newKit('https://rc1-forno.celo-testnet.org');
-    
+
     contractKit.addAccount(account.privateKey);
 
     return contractKit;
