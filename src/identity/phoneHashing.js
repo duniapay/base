@@ -1,28 +1,29 @@
-const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
-const { getPhoneNumberIdentifier } = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier;
-const { getAuthSigner } = require('./authSigner');
-const { ErrorMessage } = require('./errorMessage');
+const getPhoneNumberIdentifier = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier;
+const ODIS_MAINNET_CONTEXT = require('@celo/contractkit').OdisUtils.Query.ODIS_MAINNET_CONTEXT;
+const { getAuthSigner } = require('./authentication');
+const { ErrorMessages } = require('./errorMessage');
 const { isE164Number } = require('./utils');
 
-async function getPhoneHashDetail(e164Number, account) {
-    if (!isE164Number(e164Number)) {
-        throw new Error('Invalid phone number: ' + e164Number);
+async function getPhoneHashDetail(account, phoneNumber) {
+    if (!isE164Number(phoneNumber)) {
+        throw new Error('Invalid phone number: ' + phoneNumber);
     }
 
-    const authSigner = getAuthSigner(account);
-    const serviceContext = ODIS_MAINNET_CONTEXT;
-
     try {
-        const res = await getPhoneNumberIdentifier(e164Number, account.address, authSigner, serviceContext);
+        const authSigner = getAuthSigner(account);
 
-        return res;
-    } catch (error) {
-        if (error.message === ErrorMessage.ODIS_INSUFFICIENT_BALANCE) {
+        const phoneHashDetail = await getPhoneNumberIdentifier(phoneNumber, account.address, authSigner, ODIS_MAINNET_CONTEXT);
+        
+        return phoneHashDetail;
+    } catch(error) {
+        if (error.message === ErrorMessages.ODIS_INSUFFICIENT_BALANCE) {
             throw new Error('ODIS insufficient balance');
-        } else if (error.message === ErrorMessage.SALT_QUOTA_EXCEEDED) {
+        } else if (error.message === ErrorMessages.SALT_QUOTA_EXCEEDED) {
             throw new Error('Salt quota exceeded');
-        } else {
+        } else if (error.message === SALT_FETCH_FAILURE) {
             throw new Error('Salt fetch failure');
+        } else {
+            throw error;
         }
     }
 }

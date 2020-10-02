@@ -1,14 +1,14 @@
 const { parsePhoneNumberFromString } = require('libphonenumber-js');
 
-function isE164Number(e164Number) {
+function isE164Number(phoneNumber) {
     const E164_REGEX = /^\+[1-9][0-9]{1,14}$/;
 
-    return E164_REGEX.test(e164Number);
+    return E164_REGEX.test(phoneNumber);
 }
 
-function parsePhoneNumber(e164Number) {
+function parsePhoneNumber(phoneNumber) {
     const parsedPhoneNumber = {};
-    const basePhoneNumber = parsePhoneNumberFromString(e164Number);
+    const basePhoneNumber = parsePhoneNumberFromString(phoneNumber);
 
     parsedPhoneNumber.e164Number = basePhoneNumber.format("E.164");
     parsedPhoneNumber.displayNumberNational = basePhoneNumber.format("NATIONAL");
@@ -18,5 +18,18 @@ function parsePhoneNumber(e164Number) {
     return parsedPhoneNumber;
 }
 
+function parsePhoneNumbers(phoneNumbers) {
+    const parsedPhoneNumbers = [];
+
+    phoneNumbers.array.forEach(phoneNumber => {
+        const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
+
+        parsedPhoneNumbers.push(parsedPhoneNumber.e164Number);
+    });
+
+    return  parsedPhoneNumbers;
+}
+
 module.exports.isE164Number = isE164Number;
 module.exports.parsePhoneNumber = parsePhoneNumber;
+module.exports.parsePhoneNumbers = parsePhoneNumbers;
