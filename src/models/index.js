@@ -1,45 +1,33 @@
-let phone_address = [];
-
-let address_attestationStat = {
-    1: {
-        address = '0x0000000000000000000000000000000000007E57',
-        attestationStat = {
-            isVerified: false,
-            numAttestationsRemaining: 0,
-            total: 3,
-            completed: 3
-        }
+let mockAccounts = {
+    mockAccount: {
+        privateKey: '',
+        address: ''
     },
-    2: {
-        address = '0x9335BaFcE54cAa0D6690d1D4DA6406568b52488F',
-        attestationStat = {
-            isVerified: false,
-            numAttestationsRemaining: 2,
-            total: 7,
-            completed: 5
-        }
-    },
-    3: {
-        address = '0x8e1Df47B7064D005Ef071a89D0D7dc8634BC8A9C',
-        attestationStat = {
-            isVerified: false,
-            numAttestationsRemaining: 2,
-            total: 7,
-            completed: 5
-        }
+    mockAccount2: {
+        privateKey: '',
+        address: ''
     }
 }
 
-let authSigners = {
-    walletKeySigner: {
-        authenticationMethod = AuthenticationMethod.WALLET_KEY,
-        // contractKit = 
-    },
-    EncryptionKeySigner: {
-        authenticationMethod = AuthenticationMethod.ENCRYPTION_KEY,
-        rawKey = '41e8e8593108eeedcbded883b8af34d2f028710355c57f4c10a056b72486aa04'
-    },
+let mockContacts = {
+    mockContact: [
+        ''
+    ],
+    mockContact2: [
+        ''
+    ]
 }
+
+let mockAttestationStats = {
+    mockAttestationStat: {
+        completed: 3,
+        total: 3
+    },
+    mockAttestationStat: {
+        completed: 3,
+        total: 3
+    }
+} 
 
 let recipients = {
     1: {
@@ -95,19 +83,6 @@ let parsedPhoneNumbers = {
     }
 }
 
-let contacts = {
-    1: {
-        displayName: 'serge o',
-        label: 'personal',
-        number: 'string'
-    },
-    2: {
-        displayName: 'Angela S',
-        label: 'friend',
-        number: 'string'
-    }
-}
-
 let attestationStatus = {
     1: {
         isVerified: false,
@@ -120,17 +95,6 @@ let attestationStatus = {
         numAttestationsRemaining: 2,
         total: 7,
         completed: 5
-    }
-}
-
-let attestationStat = {
-    1: {
-        completed: false,
-        total: 2
-    },
-    2: {
-        completed: true,
-        total: 0
     }
 }
 
@@ -149,15 +113,6 @@ let metadataInTx = {
     }
 }
 
-
-
-module.exports = {
-    accounts,
-    phone_address_map,
-    recipients,
-    parsedPhoneNumbers,
-    attestationStatus,
-    attestationStat,
-    metadataInTx,
-    contacts
-};
+module.exports.mockAccounts = mockAccounts;
+module.exports.mockContacts = mockContacts;
+module.exports.mockAttestationStats = mockAttestationStats;

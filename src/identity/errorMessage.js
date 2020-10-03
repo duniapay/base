@@ -10,4 +10,4 @@ const ErrorMessages = {
     MATCHMAKING_QUOTA_EXCEEDED: 'matchmakingQuotaExceededError'
 }
 
-module.exports.ErrorMessage = ErrorMessage;
+module.exports.ErrorMessages = ErrorMessages;

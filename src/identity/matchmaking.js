@@ -2,6 +2,7 @@ const getContactMatches = require('@celo/contractkit').OdisUtils.Matchmaking.get
 const ODIS_MAINNET_CONTEXT = require('@celo/contractkit').OdisUtils.Query.ODIS_MAINNET_CONTEXT;
 const { getAuthSigner } = require('./authentication');
 const { getPhoneHashDetail } = require('./phoneHashing');
+const { ErrorMessages } = require('./errorMessage');
 const { parsePhoneNumbers } = require("./utils");
 
 async function getMatchedContacts(account, phoneNumber, contacts) {

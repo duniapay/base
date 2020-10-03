@@ -1,4 +1,7 @@
 const { parsePhoneNumberFromString } = require('libphonenumber-js');
+const { privateToAddress, toChecksumAddress } = require('ethereumjs-util');
+const { normalizeAddressWith0x, trimLeading0x, ensureLeading0x, hexToBuffer } = require('@celo/base');
+const { privateKeyToAddress } = require('@celo/utils');
 
 function isE164Number(phoneNumber) {
     const E164_REGEX = /^\+[1-9][0-9]{1,14}$/;
@@ -10,7 +13,7 @@ function parsePhoneNumber(phoneNumber) {
     const parsedPhoneNumber = {};
     const basePhoneNumber = parsePhoneNumberFromString(phoneNumber);
 
-    parsedPhoneNumber.e164Number = basePhoneNumber.format("E.164");
+    parsedPhoneNumber.e164Number = basePhoneNumber.format('E.164');
     parsedPhoneNumber.displayNumberNational = basePhoneNumber.format("NATIONAL");
     parsedPhoneNumber.displayNumberInternational = basePhoneNumber.format("INTERNATIONAL");
     parsedPhoneNumber.countryCode = basePhoneNumber.country;
@@ -21,11 +24,11 @@ function parsePhoneNumber(phoneNumber) {
 function parsePhoneNumbers(phoneNumbers) {
     const parsedPhoneNumbers = [];
 
-    phoneNumbers.array.forEach(phoneNumber => {
-        const parsedPhoneNumber = parsePhoneNumber(phoneNumber);
+    // phoneNumbers.forEach(phoneNumber => parsedPhoneNumbers.push(parsePhoneNumber(phoneNumber).e164Number));
 
-        parsedPhoneNumbers.push(parsedPhoneNumber.e164Number);
-    });
+    for (phoneNumber of phoneNumbers) {
+        parsedPhoneNumbers.push(parsePhoneNumber(phoneNumber).e164Number);
+    }
 
     return  parsedPhoneNumbers;
 }
