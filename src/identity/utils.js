@@ -9,27 +9,31 @@ function isE164Number(phoneNumber) {
     return E164_REGEX.test(phoneNumber);
 }
 
-function parsePhoneNumber(phoneNumber) {
+
+function parsePhoneNumber(phoneNumberDetail) {
     const parsedPhoneNumber = {};
-    const basePhoneNumber = parsePhoneNumberFromString(phoneNumber);
+    const phoneNumber = phoneNumberDetail.phoneNumber;
+    const countryCode = phoneNumberDetail.countryCode ? phoneNumberDetail.countryCode : null;
 
-    parsedPhoneNumber.e164Number = basePhoneNumber.format('E.164');
-    parsedPhoneNumber.displayNumberNational = basePhoneNumber.format("NATIONAL");
-    parsedPhoneNumber.displayNumberInternational = basePhoneNumber.format("INTERNATIONAL");
-    parsedPhoneNumber.countryCode = basePhoneNumber.country;
+    try {
+        const basePhoneNumber = parsePhoneNumberFromString(phoneNumber, countryCode);
 
-    return parsedPhoneNumber;
+        parsedPhoneNumber.e164Number = basePhoneNumber.format('E.164');
+        parsedPhoneNumber.displayNumberNational = basePhoneNumber.format("NATIONAL");
+        parsedPhoneNumber.displayNumberInternational = basePhoneNumber.format("INTERNATIONAL");
+        parsedPhoneNumber.countryCode = basePhoneNumber.country;
+
+        return parsedPhoneNumber;
+    } catch (error) {
+        throw new Error('Failed to parse phone number ' + phoneNumber + ' with country code ' + countryCode);
+    }
 }
 
-function parsePhoneNumbers(phoneNumbers) {
+function parsePhoneNumbers(phoneNumberDetails) {
     const parsedPhoneNumbers = [];
 
-    // phoneNumbers.forEach(phoneNumber => parsedPhoneNumbers.push(parsePhoneNumber(phoneNumber).e164Number));
-
-    for (phoneNumber of phoneNumbers) {
-        parsedPhoneNumbers.push(parsePhoneNumber(phoneNumber).e164Number);
-    }
-
+    phoneNumberDetails.forEach(phoneNumberDetail => parsedPhoneNumbers.push(parsePhoneNumber(phoneNumberDetail).e164Number));
+    
     return  parsedPhoneNumbers;
 }
 
