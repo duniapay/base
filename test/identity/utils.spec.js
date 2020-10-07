@@ -2,25 +2,6 @@ const expect = require('chai').expect;
 const { isE164Number, parsePhoneNumber, parsePhoneNumbers } = require('../../src/identity/utils');
 
 const TEST_PHONE_NUMBER = {
-    INVALID: {
-        NULL: {
-            phoneNumber: null,
-            countryCode: 'US'
-        },
-        EMPTY: {
-            phoneNumber: '',
-            countryCode: 'US'
-        },
-        SHORT: {
-            phoneNumber: '+1',
-            countryCode: 'US'
-        },
-        LONG: {
-            phoneNumber: '+1111111111111111',
-            countryCode: 'US'
-        },
-    },
-
     VALID_US: {
         1: {
             phoneNumber: '+14155550000',
@@ -38,6 +19,25 @@ const TEST_PHONE_NUMBER = {
             phoneNumber: '(415) 555-0000',
             countryCode: 'US'
         }
+    },
+
+    INVALID: {
+        NULL: {
+            phoneNumber: null,
+            countryCode: 'US'
+        },
+        EMPTY: {
+            phoneNumber: '',
+            countryCode: 'US'
+        },
+        SHORT: {
+            phoneNumber: '+1',
+            countryCode: 'US'
+        },
+        LONG: {
+            phoneNumber: '+1111111111111111',
+            countryCode: 'US'
+        },
     }
 }
 
@@ -66,10 +66,10 @@ describe("Phone number validity", () => {
 
 describe("Phone number parsing", () => {
     it('parses the phone number', () => {
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[1])).to.equal(parsedPhoneNumber);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[2])).to.equal(parsedPhoneNumber);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[3])).to.equal(parsedPhoneNumber);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[4])).to.equal(parsedPhoneNumber);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[1])).to.equal(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[2])).to.equal(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[3])).to.equal(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[4])).to.equal(parsedPhoneNumberUS);
     });
 
     it('parses the phone numbers', () => {

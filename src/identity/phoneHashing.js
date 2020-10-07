@@ -20,7 +20,7 @@ async function getPhoneHashDetail(account, phoneNumber) {
             throw new Error('ODIS insufficient balance');
         } else if (error.message === ErrorMessages.SALT_QUOTA_EXCEEDED) {
             throw new Error('Salt quota exceeded');
-        } else if (error.message === SALT_FETCH_FAILURE) {
+        } else if (error.message === ErrorMessages.SALT_FETCH_FAILURE) {
             throw new Error('Salt fetch failure');
         } else {
             throw error;

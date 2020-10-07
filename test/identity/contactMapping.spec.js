@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const { getMatchedContacts } = require('../../src/identity/matchMaking');
+const { getPhoneAddressMapping } = require('../../src/identity/phoneAddressMapping');
 const { ErrorMessages } = require('../../src/identity/errorMessage');
 
 const mockAccountDetails = {
@@ -24,7 +24,7 @@ const mockAccountDetails = {
     },
 
     INVALID: {
-        ODIS_QUOTA_ERROR: {
+        ADDRESS_LOOKUP_FAILURE: {
             account: {
                 privateKey: '',
                 address: ''
@@ -44,25 +44,27 @@ const mockAccountDetails = {
     }
 }
 
-const mockMatchedContacts = {
-    1: [
-        ''
-    ]
+const mockMappings = {
+    1: {
+        '0xd5b4028307ee557404bc6819790326dc0194cfc62c0ae5adcd79adb25da0bae8': {
+            '0xDcD7335735F2c4bC7228E3d59D3D05e69Bb73809': { completed: 3, total: 4 },
+            '0xE609135E96aA3424c05e940A6D2693d674bc9fDD': { completed: 3, total: 3 }
+        }
+    }
 }
 
 describe('Get phone address mapping', () => {
     it('gets the phone address mapping correctly', async () => {
-        const matchedContacts = await getMatchedContacts(mockAccountDetails.VALID[1].account, mockAccountDetails.VALID[1].phoneNumber);
+        const mapping = await getPhoneAddressMapping(mockAccountDetails.VALID[1].account, mockAccountDetails.VALID[1].phoneNumber);
 
-        expect(matchedContacts).to.equal(mockMatchedContacts[1]);
+        expect(mapping).to.equal(mockMappings[1]);
     });
 
-    it('throws an error about "Matchmaking quota exceeded"', async () => {
+    it('throws an error about "Address lookup failure"', async () => {
         try {
-            const matchedContacts = await getMatchedContacts(mockAccountDetails.INVALID.ODIS_QUOTA_ERROR.account, mockAccountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber);
+            const mapping = await getPhoneAddressMapping(mockAccountDetails.INVALID.ADDRESS_LOOKUP_FAILURE.account, mockAccountDetails.INVALID.ADDRESS_LOOKUP_FAILURE.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessages.ADDRESS_LOOKUP_FAILURE);
         }
     });
 });
-
