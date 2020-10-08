@@ -12,7 +12,9 @@ async function getPhoneAddressMapping(account, phoneNumber) {
         
         return mapping;
     } catch(error) {
-        if (error.message === ErrorMessages.ADDRESS_LOOKUP_FAILURE) {
+        if (error.message === ErrorMessages.ODIS_QUOTA_ERROR) {
+            throw new Error('ODIS insufficient balance');
+        } else if (error.message === ErrorMessages.ADDRESS_LOOKUP_FAILURE) {
             throw new Error('Address lookup failure');
         } else {
             throw error;
