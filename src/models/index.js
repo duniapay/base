@@ -54,33 +54,11 @@ let mockPhoneHashDetails = {
         e164Number: '+14155550000',
         phoneHash: '0xf6429456331dedf8bd32b5e3a578e5bc589a28d012724dcd3e0a4b1be67bb454',
         pepper: 'piWqRHHYWtfg9'
-    },
-    2: {
-        e164Number: '+14155550000',
-        phoneHash: '0xf6429456331dedf8bd32b5e3a578e5bc589a28d012724dcd3e0a4b1be67bb454',
-        pepper: 'piWqRHHYWtfg9'
-    },
-    3: {
-        e164Number: '+14155550000',
-        phoneHash: '0xf6429456331dedf8bd32b5e3a578e5bc589a28d012724dcd3e0a4b1be67bb454',
-        pepper: 'piWqRHHYWtfg9'
     }
 }
 
 let mockMappings = {
     1: {
-        '0xd5b4028307ee557404bc6819790326dc0194cfc62c0ae5adcd79adb25da0bae8': {
-            '0xDcD7335735F2c4bC7228E3d59D3D05e69Bb73809': { completed: 3, total: 4 },
-            '0xE609135E96aA3424c05e940A6D2693d674bc9fDD': { completed: 3, total: 3 }
-        }
-    },
-    2: {
-        '0xd5b4028307ee557404bc6819790326dc0194cfc62c0ae5adcd79adb25da0bae8': {
-            '0xDcD7335735F2c4bC7228E3d59D3D05e69Bb73809': { completed: 3, total: 4 },
-            '0xE609135E96aA3424c05e940A6D2693d674bc9fDD': { completed: 3, total: 3 }
-        }
-    },
-    3: {
         '0xd5b4028307ee557404bc6819790326dc0194cfc62c0ae5adcd79adb25da0bae8': {
             '0xDcD7335735F2c4bC7228E3d59D3D05e69Bb73809': { completed: 3, total: 4 },
             '0xE609135E96aA3424c05e940A6D2693d674bc9fDD': { completed: 3, total: 3 }

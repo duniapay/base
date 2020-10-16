@@ -28,9 +28,4 @@ async function getPhoneHashDetail(account, phoneNumber) {
     }
 }
 
-const account = {
-    privateKey: '3a26ebc37944c305670a21ea6a5d16c1084db2f18bc6635ba95f487e5c59868f',
-    address: '0xf235209c92d21c59b25c6f5c41cfa16e39bf67d2'
-}
-
 module.exports.getPhoneHashDetail = getPhoneHashDetail;
