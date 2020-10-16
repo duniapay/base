@@ -1,4 +1,4 @@
-const AuthenticationMethod = require('@celo/contractkit').OdisUtils.Query.AuthenticationMethod;
+const { AuthenticationMethod } = require('@celo/contractkit').OdisUtils.Query;
 const { getContractKit } = require('./account');
 
 let dek = false;

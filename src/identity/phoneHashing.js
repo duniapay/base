@@ -1,5 +1,5 @@
-const getPhoneNumberIdentifier = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier.getPhoneNumberIdentifier;
-const ODIS_MAINNET_CONTEXT = require('@celo/contractkit').OdisUtils.Query.ODIS_MAINNET_CONTEXT;
+const { getPhoneNumberIdentifier } = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier;
+const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
 const { getAuthSigner } = require('./authentication');
 const { ErrorMessages } = require('./errorMessage');
 const { isE164Number } = require('./utils');

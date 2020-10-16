@@ -1,5 +1,5 @@
-const getContactMatches = require('@celo/contractkit').OdisUtils.Matchmaking.getContactMatches;
-const ODIS_MAINNET_CONTEXT = require('@celo/contractkit').OdisUtils.Query.ODIS_MAINNET_CONTEXT;
+const { getContactMatches } = require('@celo/contractkit').OdisUtils.Matchmaking;
+const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
 const { getAuthSigner } = require('./authentication');
 const { getPhoneHashDetail } = require('./phoneHashing');
 const { ErrorMessages } = require('./errorMessage');
