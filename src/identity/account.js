@@ -9,14 +9,11 @@ function getContractKit(account) {
     return contractKit;
 }
 
-function getSigner(account) {
-    const web3 = new Web3('http://localhost:8545');
-    const contractKit = newKitFromWeb3(web3);
+function getContractKitFromWeb3() {
+    const contractKit = newKitFromWeb3(new Web3('http://localhost:8545'));
 
-    return {
-        sign: async (message) => contractKit.web3.eth.sign(message, account.address)
-    }
+    return contractKit;
 }
 
 module.exports.getContractKit = getContractKit;
-module.exports.getSigner = getSigner;
+module.exports.getContractKitFromWeb3 = getContractKitFromWeb3;

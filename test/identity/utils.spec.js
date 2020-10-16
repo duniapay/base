@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const { isE164Number, parsePhoneNumber, parsePhoneNumbers } = require('../../src/identity/utils');
+const { getSigner } = require('../../src/identity/utils');
 
 const TEST_PHONE_NUMBER = {
     VALID_US: {
@@ -76,3 +77,18 @@ describe("Phone number parsing", () => {
         expect(parsePhoneNumbers(Object.values(TEST_PHONE_NUMBER.VALID_US))).to.equal(parsedPhoneNumbersUS);
     });
 });
+
+describe("", () => {
+    it('gets the account as signer', () => {
+
+    }),
+
+    it('gets the account authorized signer as signer', () => {
+
+    }),
+
+    it('gets other account as signer', () => {
+
+    })
+
+}) 

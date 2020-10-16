@@ -36,6 +36,13 @@ function parsePhoneNumbers(phoneNumberDetails) {
     return  parsedPhoneNumbers;
 }
 
+function getSigner(account, contractKit) {
+    return {
+        sign: async (message) => contractKit.web3.eth.sign(message, account.address)
+    }
+}
+
 module.exports.isE164Number = isE164Number;
 module.exports.parsePhoneNumber = parsePhoneNumber;
 module.exports.parsePhoneNumbers = parsePhoneNumbers;
+module.exports.getSigner = getSigner;
