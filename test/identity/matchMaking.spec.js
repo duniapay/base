@@ -27,4 +27,3 @@ describe('Get phone address mapping', () => {
         }
     });
 });
-
