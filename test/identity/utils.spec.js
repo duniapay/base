@@ -44,10 +44,10 @@ const TEST_PHONE_NUMBER = {
 
 const parsedPhoneNumberUS = {
     e164Number: '+14155550000',
-    displayNumberNational: '(415) 555 0000',
+    displayNumberNational: '(415) 555-0000',
     displayNumberInternational: '+1 415 555 0000',
     countryCode: 'US'
-}
+  }
 
 const parsedPhoneNumbersUS = [ '+14155550000', '+14155550000', '+14155550000', '+14155550000' ];
 
@@ -81,14 +81,14 @@ describe("Phone number parsing", () => {
 describe("", () => {
     it('gets the account as signer', () => {
 
-    }),
+    });
 
     it('gets the account authorized signer as signer', () => {
 
-    }),
+    });
 
     it('gets other account as signer', () => {
 
-    })
+    });
 
 }) 

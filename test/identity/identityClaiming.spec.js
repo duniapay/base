@@ -1,46 +1,38 @@
 const expect = require('chai').expect;
+const { mockAccounts } = require('../../src/models/index');
 const { addNameClaim, addDomainClaim, addStorageClaim } = require('../../src/identity/identityClaiming');
 
-const mockAccounts = {
-    1: {
-        account: {
-            privateKey: '',
-            address: ''
-        }
-    }
+const mockNames = {
+    3 : 'Celo'
 }
 
-const names = {
-    1 : ''
-}
-
-const domains = {
+const mockDomains = {
     1: ''
 }
 
-const storages = {
+const mockStorageURLs = {
     1 : ''
 }
 
 describe('Add identity claims', () => {
     it('adds name claim correctly', async () => {
-        const nameClaim = await addNameClaim(mockAccounts[1], names[1]);
+        const nameClaim = await addNameClaim(mockAccounts[3], mockNames[3]);
 
         expect(nameClaim).to.not.be.undefined;
-        expect(nameClaim.name).to.equal(names[1]);
+        expect(nameClaim.name).to.equal(mockNames[3]);
     });
 
     it('adds domain claim correctly', async () => {
-        const domainCaim = await addDomainClaim(mockAccounts[1], domains[1]);
+        const domainCaim = await addDomainClaim(mockAccounts[1], mockDomains[1]);
 
         expect(domainCaim).to.not.be.undefined;
-        expect(domainCaim.domain).to.equal(domains[1]);
+        expect(domainCaim.domain).to.equal(mockDomains[1]);
     });
 
     it('adds name claim correctly', async () => {
-        const storageClaim = await addStorageClaim(mockAccounts[1], storages[1]);
+        const storageClaim = await addStorageClaim(mockAccounts[1], mockStorageURLs[1]);
 
         expect(storageClaim).to.not.be.undefined;
-        expect(storageClaim.storage).to.equal(storages[1]);
+        expect(storageClaim.storage).to.equal(mockStorageURLs[1]);
     });
 });

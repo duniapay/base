@@ -11,7 +11,6 @@ const accountDetails = {
     }
 }
 
-
 describe('Get phone address mapping', () => {
     it('gets the phone address mapping correctly', async () => {
         const matchedContacts = await getMatchedContacts(accountDetails.VALID[1].account, accountDetails.VALID[1].phoneNumber, Object.values(accountDetails.VALID[1].contacts));

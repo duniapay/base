@@ -4,7 +4,7 @@ const { getContractKitFromWeb3 } = require('./account');
 const { getSigner } = require('./utils');
 
 async function addNameClaim(account, name) {
-    const contractkit = getContractKitFromWeb3();
+    const contractkit = getContractKitFromWeb3(); //
 
     const metadata = IdentityMetadataWrapper.fromEmpty(account.address);
     const claim = createNameClaim(name);
@@ -46,6 +46,12 @@ async function addStorageClaim(account, storageURL) {
     const storageClaim = parsedMetadata.findClaim(ClaimTypes.STORAGE);
 
     return storageClaim;
+}
+
+async function verifyNameClaim(contractkit, name, signer) {
+    const signature = '';
+
+    await IdentityMetadataWrapper.verifySigner(contractkit, name, signature, signer);
 }
 
 module.exports.addNameClaim = addNameClaim;
