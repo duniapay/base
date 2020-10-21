@@ -3,6 +3,8 @@ const { mockAccounts } = require('../../src/models/index');
 const { addNameClaim, addDomainClaim, addStorageClaim } = require('../../src/identity/identityClaiming');
 
 const mockNames = {
+    1: '',
+    2: '',
     3 : 'Celo'
 }
 
@@ -18,21 +20,18 @@ describe('Add identity claims', () => {
     it('adds name claim correctly', async () => {
         const nameClaim = await addNameClaim(mockAccounts[3], mockNames[3]);
 
-        expect(nameClaim).to.not.be.undefined;
         expect(nameClaim.name).to.equal(mockNames[3]);
     });
 
     it('adds domain claim correctly', async () => {
         const domainCaim = await addDomainClaim(mockAccounts[1], mockDomains[1]);
 
-        expect(domainCaim).to.not.be.undefined;
         expect(domainCaim.domain).to.equal(mockDomains[1]);
     });
 
     it('adds name claim correctly', async () => {
         const storageClaim = await addStorageClaim(mockAccounts[1], mockStorageURLs[1]);
 
-        expect(storageClaim).to.not.be.undefined;
         expect(storageClaim.storage).to.equal(mockStorageURLs[1]);
     });
 });

@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "babel-node src/index.js",
-    "test": "mocha --require @babel/register 'test/**/**spec.js'",
+    "test": "mocha 'test/**/**spec.js'",
     "dev": "babel-watch src/index.js",
     "prelint:js": "npm run format:all",
     "lint:js": "eslint ./*.js",
