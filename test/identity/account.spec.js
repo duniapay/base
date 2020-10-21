@@ -4,9 +4,9 @@ const { getContractKit, getContractKitFromWeb3 } = require('./../../src/identity
 
 describe('Get contract kit', () => {
     it('imports the account to the contract kit correctly', async () => {
-        const accounts = await getContractKit(mockAccounts[1]).web3.eth.getAccounts();
+        const accounts = await getContractKit(mockAccounts[3]).web3.eth.getAccounts();
 
-        expect(accounts[0]).to.equal(mockAccounts[1].address);
+        expect(accounts[0]).to.equal(mockAccounts[3].address);
     });
 });
 
