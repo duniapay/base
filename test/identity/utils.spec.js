@@ -44,7 +44,7 @@ const TEST_PHONE_NUMBER = {
 
 const parsedPhoneNumberUS = {
     e164Number: '+14155550000',
-    displayNumberNational: '(415) 555-0000',
+    displayNumberNational: '(415) 555-0000',      
     displayNumberInternational: '+1 415 555 0000',
     countryCode: 'US'
   }
@@ -67,14 +67,14 @@ describe("Phone number validity", () => {
 
 describe("Phone number parsing", () => {
     it('parses the phone number', () => {
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[1])).to.equal(parsedPhoneNumberUS);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[2])).to.equal(parsedPhoneNumberUS);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[3])).to.equal(parsedPhoneNumberUS);
-        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[4])).to.equal(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[1])).to.eql(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[2])).to.eql(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[3])).to.eql(parsedPhoneNumberUS);
+        expect(parsePhoneNumber(TEST_PHONE_NUMBER.VALID_US[4])).to.eql(parsedPhoneNumberUS);
     });
 
     it('parses the phone numbers', () => {
-        expect(parsePhoneNumbers(Object.values(TEST_PHONE_NUMBER.VALID_US))).to.equal(parsedPhoneNumbersUS);
+        expect(parsePhoneNumbers(Object.values(TEST_PHONE_NUMBER.VALID_US))).to.eql(parsedPhoneNumbersUS);
     });
 });
 

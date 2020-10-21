@@ -20,18 +20,24 @@ let mockPhoneNumbers = {
 }
 
 let mockContacts = {
-    1: {
-        phoneNumber: '',
-        countryCode: ''
-    },
-    2: {
-        phoneNumber: '',
-        countryCode: ''
-    },
-    3: {
-        phoneNumber: '',
-        countryCode: ''
-    }
+    1: [
+        {
+            phoneNumber: '',
+            countryCode: ''
+        },
+    ],
+    2: [
+        {
+            phoneNumber: '',
+            countryCode: ''
+        },
+    ],
+    3: [
+        {
+            phoneNumber: '+14155550030',
+            countryCode: 'US'
+        }
+    ]
 }
 
 let mockAttestationStats = {
@@ -80,17 +86,17 @@ let mockAccountDetails = {
         attestationStat: mockAttestationStats[1]
     },
     2: {
-        account: mockAccounts[1],
-        phoneNumber: mockPhoneNumbers[1],
-        contacts: mockContacts[1],
-        attestationStat: mockAttestationStats[1]
+        account: mockAccounts[2],
+        phoneNumber: mockPhoneNumbers[2],
+        contacts: mockContacts[2],
+        attestationStat: mockAttestationStats[2]
     },
     // ODIS_QUOTA_ERROR
     3: {
-        account: mockAccounts[1],
-        phoneNumber: mockPhoneNumbers[1],
-        contacts: mockContacts[1],
-        attestationStat: mockAttestationStats[1]
+        account: mockAccounts[3],
+        phoneNumber: mockPhoneNumbers[3],
+        contacts: mockContacts[3],
+        attestationStat: mockAttestationStats[3]
     }
 }
 

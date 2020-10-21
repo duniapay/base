@@ -9,3 +9,10 @@ describe('Get contract kit', () => {
         expect(accounts[0]).to.equal(mockAccounts[3].address);
     });
 });
+
+describe('Get contract kit from web3', () => {
+    it('creates a contract kit instance from web3 instance correctly', async () => {
+
+        expect(accounts[0]).to.equal(mockAccounts[3].address);
+    });
+});
