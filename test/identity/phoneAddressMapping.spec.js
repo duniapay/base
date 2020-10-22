@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { mockAccountDetails, mockMappings } = require('../../src/models/index');
 const { getPhoneAddressMapping } = require('../../src/identity/phoneAddressMapping');
-const { ErrorMessages } = require('../../src/identity/errorMessage');
+const { ErrorMessage } = require('../../src/identity/errorMessage');
 
 const accountDetails = {
     VALID: mockAccountDetails[1],
@@ -23,7 +23,7 @@ describe('Get phone address mapping', () => {
         try {
             const mapping = await getPhoneAddressMapping(accountDetails.INVALID.ODIS_QUOTA_ERROR.account, accountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessage.ODIS_QUOTA_ERROR);
         }
     });
 
@@ -31,7 +31,7 @@ describe('Get phone address mapping', () => {
         try {
             const mapping = await getPhoneAddressMapping(accountDetails.INVALID.ADDRESS_LOOKUP_FAILURE.account, accountDetails.INVALID.ADDRESS_LOOKUP_FAILURE.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.ADDRESS_LOOKUP_FAILURE);
+            expect(error.message).to.equal(ErrorMessage.ADDRESS_LOOKUP_FAILURE);
         }
     });
 });

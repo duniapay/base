@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { mockAccountDetails, mockMatchedContacts } = require('../../src/models/index');
 const { getMatchedContacts } = require('../../src/identity/matchMaking');
-const { ErrorMessages } = require('../../src/identity/errorMessage');
+const { ErrorMessage } = require('../../src/identity/errorMessage');
 
 const accountDetails = {
     VALID: mockAccountDetails[1],
@@ -23,7 +23,7 @@ describe('Get matched contacts', () => {
         try {
             const matchedContacts = await getMatchedContacts(accountDetails.INVALID.ODIS_QUOTA_ERROR.account, accountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber, Object.values(accountDetails.INVALID.ODIS_QUOTA_ERROR.contacts));
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessage.ODIS_QUOTA_ERROR);
         }
     });
 });

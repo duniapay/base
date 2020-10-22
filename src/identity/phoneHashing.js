@@ -1,8 +1,8 @@
 const { getPhoneNumberIdentifier } = require('@celo/contractkit').OdisUtils.PhoneNumberIdentifier;
 const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
-const { getAuthSigner } = require('./authentication');
-const { ErrorMessages } = require('./errorMessage');
-const { isE164Number } = require('./utils');
+const { getAuthSigner } = require('./utils/authentication');
+const { ErrorMessage } = require('./errorMessage');
+const { isE164Number } = require('./utils/phoneNumber');
 
 async function getPhoneHashDetail(account, phoneNumber) {
     if (!isE164Number(phoneNumber)) {
@@ -16,11 +16,11 @@ async function getPhoneHashDetail(account, phoneNumber) {
 
         return phoneHashDetail;
     } catch(error) {
-        if (error.message === ErrorMessages.ODIS_INSUFFICIENT_BALANCE) {
+        if (error.message === ErrorMessage.ODIS_INSUFFICIENT_BALANCE) {
             throw new Error('ODIS insufficient balance');
-        } else if (error.message === ErrorMessages.SALT_QUOTA_EXCEEDED) {
+        } else if (error.message === ErrorMessage.SALT_QUOTA_EXCEEDED) {
             throw new Error('Salt quota exceeded');
-        } else if (error.message === ErrorMessages.SALT_FETCH_FAILURE) {
+        } else if (error.message === ErrorMessage.SALT_FETCH_FAILURE) {
             throw new Error('Salt fetch failure');
         } else {
             throw error;

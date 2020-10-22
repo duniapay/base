@@ -1,7 +1,13 @@
 const { IdentityMetadataWrapper } = require('@celo/contractkit');
 const { createNameClaim, createDomainClaim, createStorageClaim } = require('@celo/contractkit/lib/identity/claims/claim');
-const { getContractKitFromWeb3 } = require('./account');
-const { getSigner } = require('./utils');
+const { getContractKitFromWeb3 } = require('./utils/account');
+const { getSigner } = require('./utils/signature');
+
+const Action = {
+    VOTE: 'vote',
+    VALIDATOR: 'validator',
+    ATTESTATION: 'attestation'
+}
 
 // async function addNameClaim(account, name) {
 //     const contractkit = getContractKitFromWeb3(); //
@@ -48,43 +54,38 @@ const { getSigner } = require('./utils');
 //     return storageClaim;
 // }
 
-async function addNameClaim(contractkit, metadata, claim, signer) {
-    await metadata.addClaim(claim, signer);
+async function addNameClaim(account, name, signer = account.address, action) {
+    const contractkit = getContractKitFromWeb3();
+    const metadata = IdentityMetadataWrapper.fromEmpty(account.address);
+
+    if (action) {
+        const accounts = await contractkit.contracts.getAccounts();
+        const pop = await accounts.generateProofOfKeyPossession(address, signer);
+
+        switch (action) {
+            case Action.VOTE:
+                await (await accounts.authorizeVoteSigner(signer, pop)).send({ from: account.address });
+                break;
+
+            case Action.VALIDATOR:
+                await (await accounts.authorizeValidatorSigner(signer, pop)).send({ from: account.address });
+                break;
+
+            case Action.ATTESTATION:
+                await (await accounts.authorizeAttestationSigner(signer, pop)).send({ from: account.address });
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    await metadata.addClaim(createNameClaim(name), getSigner(signer, contractkit));
 
     const parsedMetadata = await IdentityMetadataWrapper.fromRawString(contractkit, metadata.toString());
     const nameClaim = parsedMetadata.findClaim(ClaimTypes.NAME);
 
     return nameClaim;
-}
-
-function getAccountSigner(account, contractkit) {
-    return getSigner(account, contractkit);
-}
-
-function getAccountAuthorizedSigner(account, contractkit, action) {
-    const accounts = await contractkit.contracts.getAccounts();
-
-    await accounts.createAccount().send({ from: account.address })
-
-    const pop = await accounts.generateProofOfKeyPossession(account.address, signer)
-
-    switch (action) {
-        case 'vote':
-            await (await accounts.authorizeVoteSigner(signer, pop)).send({ from: address })
-            return getSigner(signer, contractkit);
-        case 'validator':
-            break;
-        case 'attestation':
-            break;
-        default:
-            break;
-    }
-}
-
-async function verifyNameClaim(contractkit, name, signer) {
-    const signature = '';
-
-    await IdentityMetadataWrapper.verifySigner(contractkit, name, signature, signer);
 }
 
 module.exports.addNameClaim = addNameClaim;

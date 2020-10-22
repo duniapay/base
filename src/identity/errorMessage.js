@@ -1,4 +1,4 @@
-const ErrorMessages = {
+const ErrorMessage = {
     // phoneHashing
     ODIS_INSUFFICIENT_BALANCE: 'odisInsufficientBalance',
     SALT_QUOTA_EXCEEDED: 'saltQuotaExceededError',
@@ -10,4 +10,4 @@ const ErrorMessages = {
     MATCHMAKING_QUOTA_EXCEEDED: 'matchmakingQuotaExceededError'
 }
 
-module.exports.ErrorMessages = ErrorMessages;
+module.exports.ErrorMessage = ErrorMessage;

@@ -1,6 +1,7 @@
 const { AuthenticationMethod } = require('@celo/contractkit').OdisUtils.Query;
 const { getContractKit } = require('./account');
 
+// TODO
 let dek = false;
 
 class AuthenticationSigner {
@@ -31,7 +32,7 @@ function getAuthSigner(account) {
     const contractKit = getContractKit(account);
 
     if (dek) {
-        // authSigner = new EncryptionKeySigner(privateDataKey);
+        // TODO
     } else {
         authSigner = new WalletKeySigner(contractKit);
     }

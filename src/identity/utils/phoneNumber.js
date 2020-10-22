@@ -1,7 +1,4 @@
 const { parsePhoneNumberFromString } = require('libphonenumber-js');
-const { privateToAddress, toChecksumAddress } = require('ethereumjs-util');
-const { normalizeAddressWith0x, trimLeading0x, ensureLeading0x, hexToBuffer } = require('@celo/base');
-const { privateKeyToAddress } = require('@celo/utils');
 
 function isE164Number(phoneNumber) {
     const E164_REGEX = /^\+[1-9][0-9]{1,14}$/;
@@ -36,13 +33,6 @@ function parsePhoneNumbers(phoneNumberDetails) {
     return  parsedPhoneNumbers;
 }
 
-function getSigner(account, contractKit) {
-    return {
-        sign: async (message) => contractKit.web3.eth.sign(message, account.address)
-    }
-}
-
 module.exports.isE164Number = isE164Number;
 module.exports.parsePhoneNumber = parsePhoneNumber;
 module.exports.parsePhoneNumbers = parsePhoneNumbers;
-module.exports.getSigner = getSigner;

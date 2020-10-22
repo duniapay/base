@@ -1,9 +1,9 @@
 const { getContactMatches } = require('@celo/contractkit').OdisUtils.Matchmaking;
 const { ODIS_MAINNET_CONTEXT } = require('@celo/contractkit').OdisUtils.Query;
-const { getAuthSigner } = require('./authentication');
+const { getAuthSigner } = require('./utils/authentication');
 const { getPhoneHashDetail } = require('./phoneHashing');
-const { ErrorMessages } = require('./errorMessage');
-const { parsePhoneNumbers } = require("./utils");
+const { ErrorMessage } = require('./errorMessage');
+const { parsePhoneNumbers } = require("./utils/phoneNumber");
 
 async function getMatchedContacts(account, phoneNumber, contacts) {
     try {
@@ -15,7 +15,7 @@ async function getMatchedContacts(account, phoneNumber, contacts) {
     
         return matchedContacts;
     } catch(error) {
-        if (error.message === ErrorMessages.ODIS_QUOTA_ERROR) {
+        if (error.message === ErrorMessage.ODIS_QUOTA_ERROR) {
             throw new Error('Matchmaking quota exceeded');
         } else {
             throw error;

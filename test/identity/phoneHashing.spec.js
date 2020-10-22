@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { mockAccountDetails, mockPhoneHashDetails } = require('../../src/models/index');
 const { getPhoneHashDetail } = require('./../../src/identity/phoneHashing');
-const { ErrorMessages } = require('./../../src/identity/errorMessage');
+const { ErrorMessage } = require('./../../src/identity/errorMessage');
 
 const accountDetails = {
     VALID: mockAccountDetails[1],
@@ -24,7 +24,7 @@ describe('Get phone hash detail', () => {
         try {
             const phoneHashDetail = await getPhoneHashDetail(accountDetails.INVALID.ODIS_QUOTA_ERROR.account, accountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessage.ODIS_QUOTA_ERROR);
         }
     });
 
@@ -32,7 +32,7 @@ describe('Get phone hash detail', () => {
         try {
             const phoneHashDetail = await getPhoneHashDetail(accountDetails.INVALID.SALT_QUOTA_EXCEEDED.account, accountDetails.INVALID.SALT_QUOTA_EXCEEDED.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.SALT_QUOTA_EXCEEDED);
+            expect(error.message).to.equal(ErrorMessage.SALT_QUOTA_EXCEEDED);
         }
     });
 
@@ -40,7 +40,7 @@ describe('Get phone hash detail', () => {
         try {
             const phoneHashDetail = await getPhoneHashDetail(accountDetails.INVALID.SALT_FETCH_FAILURE.account, accountDetails.INVALID.SALT_FETCH_FAILURE.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessages.SALT_FETCH_FAILURE);
+            expect(error.message).to.equal(ErrorMessage.SALT_FETCH_FAILURE);
         }
     });
 });
