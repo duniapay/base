@@ -1,11 +1,16 @@
 const expect = require('chai').expect;
+const { createNameClaim, createDomainClaim, createStorageClaim } = require('@celo/contractkit/lib/identity/claims/claim');
+const { ClaimTypes } = require('@celo/contractkit/lib/identity');
 const { mockAccounts } = require('../../src/models/index');
-const { addNameClaim, addDomainClaim, addStorageClaim } = require('../../src/identity/identityClaiming');
+const { addClaim } = require('../../src/identity/identityClaiming');
+const { getContractKitFromWeb3 } = require('../../src/identity/utils/account');
+const { getSigner } = require('../../src/identity/utils/signature');
+const { IdentityMetadataWrapper } = require('@celo/contractkit');
 
 const mockNames = {
-    1: '',
+    1: 'Celo',
     2: '',
-    3 : 'Celo'
+    3: ''
 }
 
 const mockDomains = {
@@ -16,22 +21,70 @@ const mockStorageURLs = {
     1 : ''
 }
 
+// TODO: Test with ganache
 describe('Add identity claims', () => {
-    it('adds name claim correctly', async () => {
-        const nameClaim = await addNameClaim(mockAccounts[3], mockNames[3]);
+    describe('Add name claim', () => {
+        it('recovers the claims when signed by the account', async () => {
+            const contractkit = getContractKitFromWeb3();
+            const claim = createNameClaim(mockNames[1]);
+            const signer = await getSigner(mockAccounts[1], contractkit);
 
-        expect(nameClaim.name).to.equal(mockNames[3]);
+            const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+            const nameClaim = parsedMetadata.findClaim(ClaimTypes.NAME);
+
+            expect(nameClaim.name).toEqual(name);
+        });
+        it('recovers the claims when signed by the account\'s authorized signer', async () => {
+            it('recovers the claims when signed by the account\'s authorized vote signer', async () => {
+
+            });
+            it('recovers the claims when signed by the account\'s authorized validator signer', async () => {
+
+            });
+            it('recovers the claims when signed by the account\'s authorized attestation signer', async () => {
+
+            });
+        });
+        it('rejects the claims when signed by other account', async () => {
+
+        });
     });
+    describe('Add domain claim', () => {
+        it('recovers the claims when signed by the account', async () => {
 
-    it('adds domain claim correctly', async () => {
-        const domainCaim = await addDomainClaim(mockAccounts[1], mockDomains[1]);
+        });
+        it('recovers the claims when signed by the account\'s authorized signer', async () => {
+            it('recovers the claims when signed by the account\'s authorized vote signer', async () => {
 
-        expect(domainCaim.domain).to.equal(mockDomains[1]);
+            });
+            it('recovers the claims when signed by the account\'s authorized validator signer', async () => {
+
+            });
+            it('recovers the claims when signed by the account\'s authorized attestation signer', async () => {
+
+            });
+        });
+        it('rejects the claims when signed by other account', async () => {
+
+        });
     });
+    describe('Add storage claim', () => {
+        it('recovers the claims when signed by the account', async () => {
 
-    it('adds name claim correctly', async () => {
-        const storageClaim = await addStorageClaim(mockAccounts[1], mockStorageURLs[1]);
+        });
+        it('recovers the claims when signed by the account\'s authorized signer', async () => {
+            it('recovers the claims when signed by the account\'s authorized vote signer', async () => {
 
-        expect(storageClaim.storage).to.equal(mockStorageURLs[1]);
+            });
+            it('recovers the claims when signed by the account\'s authorized validator signer', async () => {
+
+            });
+            it('recovers the claims when signed by the account\'s authorized attestation signer', async () => {
+
+            });
+        });
+        it('rejects the claims when signed by other account', async () => {
+
+        });
     });
 });
