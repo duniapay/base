@@ -38,4 +38,5 @@ async function getSigner(account, contractKit, signer, action) {
     }
 }
 
+module.exports.Action = Action;
 module.exports.getSigner = getSigner;

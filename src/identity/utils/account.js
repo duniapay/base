@@ -10,7 +10,8 @@ function getContractKit(account) {
 }
 
 function getContractKitFromWeb3() {
-    const contractKit = newKitFromWeb3(new Web3('http://localhost:8545'));
+    const web3 = new Web3('http://localhost:8545');
+    const contractKit = newKitFromWeb3(web3);
 
     return contractKit;
 }
