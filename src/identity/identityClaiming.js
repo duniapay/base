@@ -1,5 +1,11 @@
 const { IdentityMetadataWrapper } = require('@celo/contractkit');
 
+const OffchainErrors = {
+    FetchError: 'FetchError',
+    InvalidSignature: 'InvalidSignature',
+    NoStorageRootProvidedData: 'NoStorageRootProvidedData',
+}
+
 async function addClaim(claim, account, contractkit, signer) {
     const metadata = IdentityMetadataWrapper.fromEmpty(account.address);
 

@@ -28,7 +28,6 @@ const mockAuthorizedSigners = {
     ATTESTATION: ''
 }
 
-// TODO: Test with ganache
 describe('Add identity claims', () => {
     describe('Add name claim', () => {
         it('recovers the claims when signed by the account', async () => {
@@ -86,40 +85,110 @@ describe('Add identity claims', () => {
     });
     describe('Add domain claim', () => {
         it('recovers the claims when signed by the account', async () => {
+            const contractkit = getContractKitFromWeb3();
+            const claim = createDomainClaim(mockDomains[1]);
+            const signer = await getSigner(mockAccounts[1], contractkit);
 
+            const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+            const domainClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
+
+            expect(domainClaim.domain).toEqual(domain);
         });
         it('recovers the claims when signed by the account\'s authorized signer', async () => {
             it('recovers the claims when signed by the account\'s authorized vote signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createDomainClaim(mockDomains[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.VOTE, Action.VOTE);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const domainClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(domainClaim.domain).toEqual(domain);
             });
             it('recovers the claims when signed by the account\'s authorized validator signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createNameClaim(mockDomains[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.VALIDATOR, Action.VALIDATOR);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const domainClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(domainClaim.domain).toEqual(domain);
             });
             it('recovers the claims when signed by the account\'s authorized attestation signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createDomainClaim(mockDomains[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.ATTESTATION, Action.ATTESTATION);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const domainClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(domainClaim.domain).toEqual(domain);
             });
         });
         it('rejects the claims when signed by other account', async () => {
+            const contractkit = getContractKitFromWeb3();
+            const claim = createDomainClaim(mockDomains[1]);
+            const signer = await getSigner(mockAccounts[1], contractkit);
 
+            const parsedMetadata = await addClaim(claim, mockAccounts[2], contractkit, signer);
+            const domainClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
+
+            expect(domainClaim.domain).toEqual(domain);
         });
     });
     describe('Add storage claim', () => {
         it('recovers the claims when signed by the account', async () => {
+            const contractkit = getContractKitFromWeb3();
+            const claim = createStorageClaim(mockStorageURLs[1]);
+            const signer = await getSigner(mockAccounts[1], contractkit);
 
+            const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+            const storageClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
+
+            expect(storageClaim.storage).toEqual(storage);
         });
         it('recovers the claims when signed by the account\'s authorized signer', async () => {
             it('recovers the claims when signed by the account\'s authorized vote signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createStorageClaim(mockStorageURLs[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.VOTE, Action.VOTE);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const storageClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(storageClaim.storage).toEqual(storage);
             });
             it('recovers the claims when signed by the account\'s authorized validator signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createNameClaim(mockStorageURLs[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.VALIDATOR, Action.VALIDATOR);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const storageClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(storageClaim.storage).toEqual(storage);
             });
             it('recovers the claims when signed by the account\'s authorized attestation signer', async () => {
+                const contractkit = getContractKitFromWeb3();
+                const claim = createStorageClaim(mockStorageURLs[1]);
+                const signer = await getSigner(mockAccounts[1], contractkit, mockAuthorizedSigners.ATTESTATION, Action.ATTESTATION);
+    
+                const parsedMetadata = await addClaim(claim, mockAccounts[1], contractkit, signer);
+                const storageClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
 
+                expect(storageClaim.storage).toEqual(storage);
             });
         });
         it('rejects the claims when signed by other account', async () => {
+            const contractkit = getContractKitFromWeb3();
+            const claim = createStorageClaim(mockStorageURLs[1]);
+            const signer = await getSigner(mockAccounts[1], contractkit);
 
+            const parsedMetadata = await addClaim(claim, mockAccounts[2], contractkit, signer);
+            const storageClaim = parsedMetadata.findClaim(ClaimTypes.DOMAIN);
+
+            expect(storageClaim.storage).toEqual(storage);
         });
     });
 });
