@@ -16,7 +16,7 @@ async function getMatchedContacts(account, phoneNumber, contacts) {
         return matchedContacts;
     } catch(error) {
         if (error.message === ErrorMessage.ODIS_QUOTA_ERROR) {
-            throw new Error('Matchmaking quota exceeded');
+            throw new Error(ErrorMessage.MATCHMAKING_QUOTA_EXCEEDED);
         } else {
             throw error;
         }

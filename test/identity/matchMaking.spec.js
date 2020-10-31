@@ -23,7 +23,7 @@ describe('Get matched contacts', () => {
         try {
             const matchedContacts = await getMatchedContacts(accountDetails.INVALID.ODIS_QUOTA_ERROR.account, accountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber, Object.values(accountDetails.INVALID.ODIS_QUOTA_ERROR.contacts));
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessage.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessage.MATCHMAKING_QUOTA_EXCEEDED);
         }
     });
 });

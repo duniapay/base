@@ -23,7 +23,7 @@ describe('Get phone address mapping', () => {
         try {
             const mapping = await getPhoneAddressMapping(accountDetails.INVALID.ODIS_QUOTA_ERROR.account, accountDetails.INVALID.ODIS_QUOTA_ERROR.phoneNumber);
         } catch (error) {
-            expect(error.message).to.equal(ErrorMessage.ODIS_QUOTA_ERROR);
+            expect(error.message).to.equal(ErrorMessage.ODIS_INSUFFICIENT_BALANCE);
         }
     });
 
