@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const { createNameClaim, createDomainClaim, createStorageClaim } = require('@celo/contractkit/lib/identity/claims/claim');
 const { ClaimTypes } = require('@celo/contractkit/lib/identity');
-const { addClaim } = require('../../src/identity/identityClaiming');
+const { addClaim, addNameClaim } = require('../../src/identity/identityClaiming');
 const { getContractKit } = require('../../src/identity/utils/account');
 const { Action, getSigner } = require('../../src/identity/utils/signature');
 
@@ -194,4 +194,36 @@ describe('Add identity claims', () => {
             }
         });
     });
+});
+
+describe('Offchain data', async () => {
+    const contractkit = getContractKit(mockAccounts.defaultAccount);
+
+    const resp = await addNameClaim(mockName, mockAccounts.defaultAccount.address, contractkit);
+
+      if (resp.ok) {
+        expect(resp.result.name).to.equal(testname);
+      } else {
+        switch (resp.error.errorType) {
+          case SchemaErrorTypes.InvalidDataError:
+            console.log("Something was wrong with the schema, can't try again")
+            break
+          case SchemaErrorTypes.OffchainError:
+            const offchainError = error.error
+            switch (offchainError.errorType) {
+              case OffchainErrorTypes.FetchError:
+                console.log('Something went wrong with fetching, try again')
+                break
+              case OffchainErrorTypes.InvalidSignature:
+                console.log('Invalid signature')
+                break
+              case OffchainErrorTypes.NoStorageRootProvidedData:
+                console.log('Account has no data for this type')
+                break
+            }
+
+          default:
+            break
+        }
+      }
 });
